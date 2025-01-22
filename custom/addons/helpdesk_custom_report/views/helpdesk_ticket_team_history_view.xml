@@ -1,0 +1,94 @@
+<odoo>
+    <!-- Tree (List) View -->
+    <record id="view_helpdesk_ticket_team_history_tree" model="ir.ui.view">
+        <field name="name">helpdesk.ticket.team.history.tree</field>
+        <field name="model">helpdesk.ticket.team.history</field>
+        <field name="arch" type="xml">
+            <tree string="Ticket Team History" create="false">
+                <field name="ticket_id"/>
+                <field name="team_id"/>
+                <field name="ticket_type_id"/>
+                <field name="user_id" string="Assigned User"/>
+                <field name="sla_id"/>
+                <field name="sla_time"/>
+                <field name="in_time"/>
+                <field name="out_time"/>
+                <field name="dur"/>
+                <!-- NEW SLA COMPARISON FIELDS -->
+                <field name="sla_status" decoration-success="sla_status == 'within'" decoration-danger="sla_status == 'above'"/>
+                <field name="time_above_sla" decoration-success="sla_status == 'within'" decoration-danger="sla_status == 'above'"/>
+                
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_helpdesk_ticket_team_history_form" model="ir.ui.view">
+        <field name="name">helpdesk.ticket.team.history.form</field>
+        <field name="model">helpdesk.ticket.team.history</field>
+        <field name="arch" type="xml">
+            <form string="Ticket Team History">
+                <sheet>
+                    <group>
+                        <field name="ticket_id"/>
+                        <field name="team_id"/>
+                        <field name="ticket_type_id"/>
+                        <field name="sla_id"/>
+                        <field name="sla_time"/>
+                    </group>
+                    <group>
+                        <field name="in_time"/>
+                        <field name="out_time"/>
+                        <field name="dur"/>
+                        <!-- SLA COMPARISON FIELDS -->
+                        <field name="sla_status"/>
+                        <field name="time_above_sla"/>
+                        <field name="user_id" string="Assigned User"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Search View -->
+    <record id="view_helpdesk_ticket_team_history_search" model="ir.ui.view">
+        <field name="name">helpdesk.ticket.team.history.search</field>
+        <field name="model">helpdesk.ticket.team.history</field>
+        <field name="arch" type="xml">
+            <search string="Ticket Team History">
+                <field name="ticket_id"/>
+                <field name="team_id"/>
+                <field name="ticket_type_id"/>
+                <field name="sla_id"/>
+                <field name="sla_time"/>
+                <field name="dur"/>
+                <field name="sla_status"/>
+                <field name="time_above_sla"/>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action to open the model in Odoo -->
+    <record id="action_helpdesk_ticket_team_history" model="ir.actions.act_window">
+        <field name="name">Ticket Team History</field>
+        <field name="res_model">helpdesk.ticket.team.history</field>
+        <field name="view_mode">tree,form,search</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+    </record>
+
+    <!-- Menu Items -->
+    <menuitem
+        id="menu_helpdesk_ticket_team_history_root"
+        name="Helpdesk History"
+        parent="helpdesk.menu_helpdesk_root"
+        sequence="200"
+    />
+    <menuitem
+        id="menu_helpdesk_ticket_team_history"
+        name="Team History"
+        parent="menu_helpdesk_ticket_team_history_root"
+        action="action_helpdesk_ticket_team_history"
+        sequence="10"
+    />
+</odoo>

@@ -1,0 +1,131 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+
+    <record model="ir.ui.view" id="helpdesk_ticket_subtype_list">
+      <field name="name">helpdesk_ticket_sub_type list</field>
+      <field name="model">helpdesk.ticket.subtype</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="type"/>
+        </tree>
+      </field>
+    </record>
+
+
+    <!-- actions opening views on models -->
+
+    <record model="ir.actions.act_window" id="helpdesk_ticket_subtype_action_window">
+      <field name="name">Helpdesk Subtypes</field>
+      <field name="res_model">helpdesk.ticket.subtype</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <!-- server action to the one above -->
+<!--
+    <record model="ir.actions.server" id="helpdesk_analysis.action_server">
+      <field name="name">helpdesk_analysis server</field>
+      <field name="model_id" ref="model_helpdesk_analysis_helpdesk_analysis"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": model._name,
+        }
+      </field>
+    </record>
+-->
+
+    <!-- Top menu item -->
+<!--    <menuitem name="helpdesk_analysis" id="helpdesk_analysis_menu_root"/>-->
+<!--    &lt;!&ndash; menu categories &ndash;&gt;-->
+
+<!--    <menuitem name="Menu 1" id="helpdesk_analysis_menu_1" parent="helpdesk_analysis_menu_root"/>-->
+<!--    <menuitem name="Menu 2" id="helpdesk_analysis_menu_2" parent="helpdesk_analysis_menu_root"/>-->
+
+    <!-- actions -->
+
+<!--    <menuitem name="List" id="helpdesk_analysis_menu_1_list" parent="helpdesk_analysis_menu_1"-->
+<!--              action="helpdesk_ticket_subtype_action_window"/>-->
+
+    <menuitem id="helpdesk_ticket_subtype_config_menu" action="helpdesk_ticket_subtype_action_window"
+        sequence="11" parent="helpdesk.helpdesk_menu_config"/>
+      <!--
+    <menuitem name="Server to list" id="helpdesk_analysis" parent="helpdesk_analysis.menu_2"
+              action="helpdesk_analysis.action_server"/>
+-->
+
+    <record id="helpdesk_ticket_type_subtype_inherit_tree" model="ir.ui.view">
+        <field name="name">helpdesk.ticket.type.subtype.inherit.tree</field>
+        <field name="model">helpdesk.ticket.type</field>
+        <field name="inherit_id" ref="helpdesk.helpdesk_ticket_type_view_tree" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="subtype_ids" widget="many2many_tags"/>
+            </xpath>
+        </field>
+    </record>
+
+
+    <record id="helpdesk_ticket_inherit_inherit_form_subtype" model="ir.ui.view">
+        <field name="name">helpdesk.ticket.inherit.form.subtype</field>
+        <field name="model">helpdesk.ticket</field>
+        <field name="inherit_id" ref="helpdesk.helpdesk_ticket_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='ticket_type_id']" position="after">
+                <field name="ticket_subtype_id"
+                       options="{'no_create': True, 'no_edit': True}"
+                       groups="!base.group_system"
+                />
+                <field name="ticket_subtype_id"
+                       groups="base.group_system"
+                />
+
+            </xpath>
+            <xpath expr="//field[@name='tag_ids']" position="after">
+                <field name="customer_mac_address" />
+                <field name="customer_owner" />
+                <field name="customer_username" />
+            </xpath>
+            <xpath expr="//field[@name='email_cc']" position="after">
+                    <label for="customer_address" string="Address" />
+                    <div> <field name="customer_address" nolabel="1" class="oe_inline" />  </div>
+                    <label for="customer_latitude" string="Geo Location"/>
+                    <div>
+                        <span>Lat : <field name="customer_latitude" nolabel="1" class="oe_inline"/></span>
+                        <span> </span>
+                        <span>Long: <field name="customer_longitude" nolabel="1" class="oe_inline"/></span>
+                    </div>
+                    <field name="customer_profile" />
+                    <field name="customer_contract_id" />
+                    <field name="customer_fdt" />
+                    <field name="customer_fat" />
+                    <field name="customer_expiration_date" />
+                    <field name="customer_created_on_date" />
+            </xpath>
+            <xpath expr="//field[@name='tag_ids']" position="attributes">
+                <attribute name="groups">base.group_system</attribute>
+            </xpath>
+            <xpath expr="//field[@name='tag_ids']" position="after">
+                <field name="tag_ids"
+                       options="{'no_create': True, 'no_edit': True, 'color_field': 'color'}"
+                       widget="many2many_tags"
+                       groups="!base.group_system"
+                />
+            </xpath>
+            <xpath expr="//field[@name='partner_id']" position="attributes">
+                <attribute name="groups">base.group_system</attribute>
+            </xpath>
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="partner_id"
+                       options="{'no_create': True, 'no_edit': True}"
+                       groups="!base.group_system"
+                />
+            </xpath>
+        </field>
+    </record>
+  </data>
+</odoo>

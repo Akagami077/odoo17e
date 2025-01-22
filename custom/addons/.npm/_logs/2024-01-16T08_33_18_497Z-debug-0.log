@@ -1,0 +1,126 @@
+0 verbose cli [ '/usr/bin/node', '/usr/bin/npm', 'install', '-g', 'rtlcss' ]
+1 info using npm@8.5.1
+2 info using node@v12.22.9
+3 timing npm:load:whichnode Completed in 0ms
+4 timing config:load:defaults Completed in 1ms
+5 timing config:load:file:/usr/share/nodejs/npm/npmrc Completed in 1ms
+6 timing config:load:builtin Completed in 1ms
+7 timing config:load:cli Completed in 2ms
+8 timing config:load:env Completed in 0ms
+9 timing config:load:project Completed in 1ms
+10 timing config:load:file:/root/.npmrc Completed in 0ms
+11 timing config:load:user Completed in 0ms
+12 timing config:load:file:/etc/npmrc Completed in 0ms
+13 timing config:load:global Completed in 0ms
+14 timing config:load:validate Completed in 0ms
+15 timing config:load:credentials Completed in 2ms
+16 timing config:load:setEnvs Completed in 0ms
+17 timing config:load Completed in 8ms
+18 timing npm:load:configload Completed in 9ms
+19 timing npm:load:setTitle Completed in 1ms
+20 timing config:load:flatten Completed in 2ms
+21 timing npm:load:display Completed in 3ms
+22 verbose logfile /root/.npm/_logs/2024-01-16T08_33_18_497Z-debug-0.log
+23 timing npm:load:logFile Completed in 4ms
+24 timing npm:load:timers Completed in 0ms
+25 timing npm:load:configScope Completed in 0ms
+26 timing npm:load Completed in 17ms
+27 timing arborist:ctor Completed in 0ms
+28 timing idealTree:init Completed in 6ms
+29 timing idealTree:userRequests Completed in 3ms
+30 silly idealTree buildDeps
+31 silly fetch manifest rtlcss@*
+32 http fetch GET 200 https://registry.npmjs.org/rtlcss 349ms (cache miss)
+33 silly placeDep ROOT rtlcss@4.1.1 OK for:  want: *
+34 silly fetch manifest escalade@^3.1.1
+35 silly fetch manifest picocolors@^1.0.0
+36 silly fetch manifest postcss@^8.4.21
+37 silly fetch manifest strip-json-comments@^3.1.1
+38 http fetch GET 200 https://registry.npmjs.org/postcss 67ms (cache miss)
+39 http fetch GET 200 https://registry.npmjs.org/escalade 112ms (cache miss)
+40 http fetch GET 200 https://registry.npmjs.org/picocolors 145ms (cache miss)
+41 http fetch GET 200 https://registry.npmjs.org/strip-json-comments 172ms (cache miss)
+42 timing idealTree:#root Completed in 533ms
+43 silly placeDep node_modules/rtlcss escalade@3.1.1 OK for: rtlcss@4.1.1 want: ^3.1.1
+44 silly placeDep node_modules/rtlcss picocolors@1.0.0 OK for: rtlcss@4.1.1 want: ^1.0.0
+45 silly placeDep node_modules/rtlcss postcss@8.4.33 OK for: rtlcss@4.1.1 want: ^8.4.21
+46 silly placeDep node_modules/rtlcss strip-json-comments@3.1.1 OK for: rtlcss@4.1.1 want: ^3.1.1
+47 silly fetch manifest nanoid@^3.3.7
+48 silly fetch manifest source-map-js@^1.0.2
+49 http fetch GET 200 https://registry.npmjs.org/source-map-js 123ms (cache miss)
+50 http fetch GET 200 https://registry.npmjs.org/nanoid 137ms (cache miss)
+51 timing idealTree:node_modules/rtlcss Completed in 149ms
+52 timing idealTree:node_modules/rtlcss/node_modules/escalade Completed in 0ms
+53 timing idealTree:node_modules/rtlcss/node_modules/picocolors Completed in 0ms
+54 silly placeDep node_modules/rtlcss nanoid@3.3.7 OK for: postcss@8.4.33 want: ^3.3.7
+55 silly placeDep node_modules/rtlcss source-map-js@1.0.2 OK for: postcss@8.4.33 want: ^1.0.2
+56 timing idealTree:node_modules/rtlcss/node_modules/postcss Completed in 3ms
+57 timing idealTree:node_modules/rtlcss/node_modules/nanoid Completed in 0ms
+58 timing idealTree:node_modules/rtlcss/node_modules/source-map-js Completed in 0ms
+59 timing idealTree:node_modules/rtlcss/node_modules/strip-json-comments Completed in 0ms
+60 timing idealTree:buildDeps Completed in 686ms
+61 timing idealTree:fixDepFlags Completed in 1ms
+62 timing idealTree Completed in 698ms
+63 timing reify:loadTrees Completed in 699ms
+64 timing reify:diffTrees Completed in 1ms
+65 silly reify moves {}
+66 timing reify:retireShallow Completed in 0ms
+67 timing reify:createSparse Completed in 3ms
+68 timing reify:loadBundles Completed in 0ms
+69 silly audit bulk request {
+69 silly audit   rtlcss: [ '4.1.1' ],
+69 silly audit   escalade: [ '3.1.1' ],
+69 silly audit   picocolors: [ '1.0.0' ],
+69 silly audit   postcss: [ '8.4.33' ],
+69 silly audit   'strip-json-comments': [ '3.1.1' ],
+69 silly audit   nanoid: [ '3.3.7' ],
+69 silly audit   'source-map-js': [ '1.0.2' ]
+69 silly audit }
+70 silly tarball no local data for rtlcss@https://registry.npmjs.org/rtlcss/-/rtlcss-4.1.1.tgz. Extracting by manifest.
+71 silly tarball no local data for source-map-js@https://registry.npmjs.org/source-map-js/-/source-map-js-1.0.2.tgz. Extracting by manifest.
+72 silly tarball no local data for nanoid@https://registry.npmjs.org/nanoid/-/nanoid-3.3.7.tgz. Extracting by manifest.
+73 silly tarball no local data for strip-json-comments@https://registry.npmjs.org/strip-json-comments/-/strip-json-comments-3.1.1.tgz. Extracting by manifest.
+74 silly tarball no local data for postcss@https://registry.npmjs.org/postcss/-/postcss-8.4.33.tgz. Extracting by manifest.
+75 silly tarball no local data for picocolors@https://registry.npmjs.org/picocolors/-/picocolors-1.0.0.tgz. Extracting by manifest.
+76 silly tarball no local data for escalade@https://registry.npmjs.org/escalade/-/escalade-3.1.1.tgz. Extracting by manifest.
+77 http fetch GET 200 https://registry.npmjs.org/strip-json-comments/-/strip-json-comments-3.1.1.tgz 94ms (cache miss)
+78 timing reifyNode:node_modules/rtlcss/node_modules/strip-json-comments Completed in 115ms
+79 http fetch GET 200 https://registry.npmjs.org/escalade/-/escalade-3.1.1.tgz 85ms (cache miss)
+80 timing reifyNode:node_modules/rtlcss/node_modules/escalade Completed in 118ms
+81 http fetch GET 200 https://registry.npmjs.org/source-map-js/-/source-map-js-1.0.2.tgz 108ms (cache miss)
+82 timing reifyNode:node_modules/rtlcss/node_modules/source-map-js Completed in 123ms
+83 http fetch GET 200 https://registry.npmjs.org/picocolors/-/picocolors-1.0.0.tgz 97ms (cache miss)
+84 timing reifyNode:node_modules/rtlcss/node_modules/picocolors Completed in 126ms
+85 http fetch GET 200 https://registry.npmjs.org/nanoid/-/nanoid-3.3.7.tgz 136ms (cache miss)
+86 timing reifyNode:node_modules/rtlcss/node_modules/nanoid Completed in 153ms
+87 http fetch GET 200 https://registry.npmjs.org/rtlcss/-/rtlcss-4.1.1.tgz 156ms (cache miss)
+88 timing reifyNode:node_modules/rtlcss Completed in 166ms
+89 http fetch GET 200 https://registry.npmjs.org/postcss/-/postcss-8.4.33.tgz 149ms (cache miss)
+90 timing reifyNode:node_modules/rtlcss/node_modules/postcss Completed in 176ms
+91 timing reify:unpack Completed in 177ms
+92 timing reify:unretire Completed in 0ms
+93 timing build:queue Completed in 1ms
+94 timing build:link:node_modules/rtlcss Completed in 2ms
+95 timing build:link:node_modules/rtlcss/node_modules/nanoid Completed in 1ms
+96 timing build:link Completed in 2ms
+97 timing build:deps Completed in 3ms
+98 timing build Completed in 3ms
+99 timing reify:build Completed in 3ms
+100 timing reify:trash Completed in 0ms
+101 http fetch POST 200 https://registry.npmjs.org/-/npm/v1/security/advisories/bulk 374ms
+102 timing auditReport:getReport Completed in 375ms
+103 silly audit report {}
+104 timing auditReport:init Completed in 0ms
+105 timing reify:audit Completed in 375ms
+106 timing reify Completed in 1090ms
+107 silly ADD node_modules/rtlcss
+108 silly ADD node_modules/rtlcss/node_modules/source-map-js
+109 silly ADD node_modules/rtlcss/node_modules/nanoid
+110 silly ADD node_modules/rtlcss/node_modules/strip-json-comments
+111 silly ADD node_modules/rtlcss/node_modules/postcss
+112 silly ADD node_modules/rtlcss/node_modules/picocolors
+113 silly ADD node_modules/rtlcss/node_modules/escalade
+114 timing command:install Completed in 1095ms
+115 verbose exit 0
+116 timing npm Completed in 1251ms
+117 info ok

@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_helpdesk_ticket_subtype,helpdesk.ticket.subtype,model_helpdesk_ticket_subtype,base.group_user,1,1,1,1
+access_sas_radius_user,sas.radius.user,model_sas_radius_user,base.group_user,1,1,1,1

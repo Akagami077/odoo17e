@@ -1,0 +1,77 @@
+<odoo>
+  <data>
+
+    <!-- Extend the helpdesk ticket form view -->
+    <record id="view_helpdesk_ticket_form_inherited" model="ir.ui.view">
+        <field name="name">helpdesk.ticket.form.inherited</field>
+        <field name="model">helpdesk.ticket</field>
+        <field name="inherit_id" ref="helpdesk.helpdesk_ticket_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button string="Sync Contacts Manually"
+                        type="object"
+                        class="oe_stat_button"
+                        icon="fa-refresh"
+                        name="btn_sync_sas_radius_users"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- explicit list view definition -->
+<!--
+    <record model="ir.ui.view" id="helpdesk_analysis.list">
+      <field name="name">helpdesk_analysis list</field>
+      <field name="model">helpdesk_analysis.helpdesk_analysis</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="value"/>
+          <field name="value2"/>
+        </tree>
+      </field>
+    </record>
+-->
+
+    <!-- actions opening views on models -->
+<!--
+    <record model="ir.actions.act_window" id="helpdesk_analysis.action_window">
+      <field name="name">helpdesk_analysis window</field>
+      <field name="res_model">helpdesk_analysis.helpdesk_analysis</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+-->
+
+    <!-- server action to the one above -->
+<!--
+    <record model="ir.actions.server" id="helpdesk_analysis.action_server">
+      <field name="name">helpdesk_analysis server</field>
+      <field name="model_id" ref="model_helpdesk_analysis_helpdesk_analysis"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": model._name,
+        }
+      </field>
+    </record>
+-->
+
+    <!-- Top menu item -->
+<!--
+    <menuitem name="helpdesk_analysis" id="helpdesk_analysis.menu_root"/>
+-->
+    <!-- menu categories -->
+<!--
+    <menuitem name="Menu 1" id="helpdesk_analysis.menu_1" parent="helpdesk_analysis.menu_root"/>
+    <menuitem name="Menu 2" id="helpdesk_analysis.menu_2" parent="helpdesk_analysis.menu_root"/>
+-->
+    <!-- actions -->
+<!--
+    <menuitem name="List" id="helpdesk_analysis.menu_1_list" parent="helpdesk_analysis.menu_1"
+              action="helpdesk_analysis.action_window"/>
+    <menuitem name="Server to list" id="helpdesk_analysis" parent="helpdesk_analysis.menu_2"
+              action="helpdesk_analysis.action_server"/>
+-->
+  </data>
+</odoo>

@@ -1,0 +1,60 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+<!--
+    <record model="ir.ui.view" id="contractor_restrict.list">
+      <field name="name">contractor_restrict list</field>
+      <field name="model">contractor_restrict.contractor_restrict</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="value"/>
+          <field name="value2"/>
+        </tree>
+      </field>
+    </record>
+-->
+
+    <!-- actions opening views on models -->
+<!--
+    <record model="ir.actions.act_window" id="contractor_restrict.action_window">
+      <field name="name">contractor_restrict window</field>
+      <field name="res_model">contractor_restrict.contractor_restrict</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+-->
+
+    <!-- server action to the one above -->
+<!--
+    <record model="ir.actions.server" id="contractor_restrict.action_server">
+      <field name="name">contractor_restrict server</field>
+      <field name="model_id" ref="model_contractor_restrict_contractor_restrict"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": model._name,
+        }
+      </field>
+    </record>
+-->
+
+    <!-- Top menu item -->
+<!--
+    <menuitem name="contractor_restrict" id="contractor_restrict.menu_root"/>
+-->
+    <!-- menu categories -->
+<!--
+    <menuitem name="Menu 1" id="contractor_restrict.menu_1" parent="contractor_restrict.menu_root"/>
+    <menuitem name="Menu 2" id="contractor_restrict.menu_2" parent="contractor_restrict.menu_root"/>
+-->
+    <!-- actions -->
+<!--
+    <menuitem name="List" id="contractor_restrict.menu_1_list" parent="contractor_restrict.menu_1"
+              action="contractor_restrict.action_window"/>
+    <menuitem name="Server to list" id="contractor_restrict" parent="contractor_restrict.menu_2"
+              action="contractor_restrict.action_server"/>
+-->
+  </data>
+</odoo>

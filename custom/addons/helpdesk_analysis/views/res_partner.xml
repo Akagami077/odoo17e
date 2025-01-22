@@ -1,0 +1,37 @@
+<odoo>
+    <data>
+        <record id="res_partner_helpdesk_analysis_form" model="ir.ui.view">
+            <field name="name">res.partner.helpdesk.analysis.form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//sheet" position="inside">
+                    <header>
+                        <button type="object" name="update_partner_data_from_sas_radius" string="UPDATE SAS USER" class="btn btn-primary" />
+                    </header>
+                </xpath>
+                <xpath expr="//field[@name='vat']" position="before">
+                    <field name="landmark" />
+                    <label for="date_localization" string="Geo Location"/>
+                    <div>
+                        <span>Lat : <field name="partner_latitude" nolabel="1" class="oe_inline"/></span>
+                        <br/>
+                        <span>Long: <field name="partner_longitude" nolabel="1" class="oe_inline"/></span>
+                        <br/>
+                    </div>
+                </xpath>
+                <xpath expr="//field[@name='category_id']" position="after">
+                    <field name="mac_address" />
+                    <field name="profile" />
+                    <field name="sas_contract_id" />
+                    <field name="username" />
+                    <field name="owner" />
+                    <field name="fdt" />
+                    <field name="fat" />
+                    <field name="expiration_date" />
+                    <field name="created_on_date" />
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

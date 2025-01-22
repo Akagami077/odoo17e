@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <!-- Inherit the helpdesk ticket form view -->
+        <record id="view_helpdesk_ticket_form_contractor" model="ir.ui.view">
+            <field name="name">helpdesk.ticket.form.contractor</field>
+            <field name="model">helpdesk.ticket</field>
+            <field name="inherit_id" ref="helpdesk.helpdesk_ticket_view_form"/>
+            <!-- Removed groups_id field -->
+            <field name="arch" type="xml">
+                <!-- Make the Assigned to field editable for contractors -->
+                <field name="user_id" position="attributes">
+                    <attribute name="readonly">False</attribute>
+                </field>
+            </field>
+        </record>
+
+        <!-- Inherit the helpdesk ticket form view to adjust the domain on 'Assigned to' field -->
+        <record id="view_helpdesk_ticket_form_assign_contractors" model="ir.ui.view">
+            <field name="name">helpdesk.ticket.form.assign.contractors</field>
+            <field name="model">helpdesk.ticket</field>
+            <field name="inherit_id" ref="helpdesk.helpdesk_ticket_view_form"/>
+            <field name="arch" type="xml">
+                <field name="user_id" position="attributes">
+                    <!-- Adjust the domain to include contractor users -->
+                    <attribute name="domain">[('share', '=', False)]</attribute>
+                </field>
+            </field>
+        </record>
+    </data>
+</odoo>

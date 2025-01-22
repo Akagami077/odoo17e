@@ -1,0 +1,26 @@
+<odoo>
+    <!-- Define an action for the new model -->
+    <record id="action_helpdesk_ticket_team_history" model="ir.actions.act_window">
+        <field name="name">Team History</field>
+        <field name="res_model">helpdesk.ticket.team.history</field>
+        <field name="view_mode">tree,form,search</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+    </record>
+
+    <!-- Menu under Helpdesk -->
+    <menuitem
+        id="menu_helpdesk_history_root"
+        name="Helpdesk History"
+        parent="helpdesk.menu_helpdesk_root"
+        sequence="100"
+    />
+
+    <menuitem
+        id="menu_helpdesk_ticket_team_history"
+        name="Team History"
+        parent="menu_helpdesk_history_root"
+        action="action_helpdesk_ticket_team_history"
+        sequence="10"
+    />
+</odoo>

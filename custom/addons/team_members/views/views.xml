@@ -1,0 +1,20 @@
+<odoo>
+    <data>
+<!--        <record id="group_helpdesk_team_tickets" model="res.groups">-->
+<!--            <field name="name">User: Team Tickets</field>-->
+<!--            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>-->
+<!--            <field name="category_id" ref="base.module_category_services_helpdesk"/>-->
+<!--        </record>-->
+        <record id="helpdesk_team_form" model="ir.ui.view">
+            <field name="name">helpdesk.team.form</field>
+            <field name="model">helpdesk.team</field>
+            <field name="inherit_id" ref="helpdesk.helpdesk_team_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@id='productivity']//div" position="after">
+                    <label for="team_members" string="Members"/>
+                    <field name="team_members" widget="many2many_tags"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

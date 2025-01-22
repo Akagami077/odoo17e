@@ -1,0 +1,19 @@
+<!--<?xml version="1.0" encoding="UTF-8"?>-->
+<!--<odoo>-->
+<!--    <data>-->
+
+<!--        &lt;!&ndash; Action to open sas.radius.user &ndash;&gt;-->
+<!--        <record id="action_sas_radius_user" model="ir.actions.act_window">-->
+<!--            <field name="name">SAS Radius Users</field>-->
+<!--            <field name="res_model">sas.radius.user</field>-->
+<!--            <field name="view_mode">tree,form</field>-->
+<!--        </record>-->
+
+<!--        &lt;!&ndash; Create a direct child menu under Contacts &ndash;&gt;-->
+<!--        <menuitem id="menu_sas_radius_user"-->
+<!--                  name="SAS Radius Users"-->
+<!--                  parent="contacts.menu_contacts"-->
+<!--                  action="action_sas_radius_user"-->
+<!--                  sequence="50"/>-->
+<!--    </data>-->
+<!--</odoo>-->

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Define a new module category -->
+        <record id="module_category_helpdesk_custom" model="ir.module.category">
+            <field name="name">Helpdesk Custom</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <!-- Define the Helpdesk Contractor group -->
+        <record id="group_helpdesk_contractor" model="res.groups">
+            <field name="name">Helpdesk Contractor</field>
+            <field name="category_id" ref="module_category_helpdesk_custom"/>
+        </record>
+
+        <!-- Record rule to restrict contractors to tickets assigned to them or created by them -->
+        <record id="helpdesk_ticket_contractor_rule" model="ir.rule">
+            <field name="name">Helpdesk Tickets Accessible by Contractor</field>
+            <field name="model_id" ref="helpdesk.model_helpdesk_ticket"/>
+            <field name="domain_force">['|', ('user_id', '=', user.id), ('create_uid', '=', user.id)]</field>
+            <field name="groups" eval="[(4, ref('group_helpdesk_contractor'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
+        <!-- Record rule to grant read access to user records for contractors -->
+        <record id="res_users_contractor_rule" model="ir.rule">
+            <field name="name">User Access for Contractors</field>
+            <field name="model_id" ref="base.model_res_users"/>
+            <field name="domain_force">[('share', '=', False)]</field>
+            <field name="groups" eval="[(4, ref('group_helpdesk_contractor'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <!-- Access rights for Helpdesk Managers to view contractor users -->
+        <record id="res_users_helpdesk_manager_rule" model="ir.rule">
+            <field name="name">User Access for Helpdesk Managers</field>
+            <field name="model_id" ref="base.model_res_users"/>
+            <field name="domain_force">[('share', '=', False)]</field>
+            <field name="groups" eval="[(4, ref('helpdesk.group_helpdesk_manager'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+    </data>
+</odoo>

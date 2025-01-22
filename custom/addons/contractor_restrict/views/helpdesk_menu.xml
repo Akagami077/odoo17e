@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <!-- Define a new Helpdesk menu for contractors -->
+        <menuitem id="menu_helpdesk_contractor_root" name="Helpdesk"
+                  sequence="10"
+                  groups="group_helpdesk_contractor" />
+
+        <!-- Define a new action for contractors -->
+        <record id="action_helpdesk_ticket_contractor" model="ir.actions.act_window">
+            <field name="name">My Helpdesk Tickets</field>
+            <field name="res_model">helpdesk.ticket</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="domain">['|', ('user_id', '=', uid), ('create_uid', '=', uid)]</field>
+            <field name="context">{'default_user_id': uid}</field>
+        </record>
+
+        <!-- Define a submenu pointing to the new action -->
+        <menuitem id="menu_helpdesk_contractor_my_tickets" name="My Tickets"
+                  parent="menu_helpdesk_contractor_root"
+                  action="action_helpdesk_ticket_contractor"
+                  groups="group_helpdesk_contractor" />
+    </data>
+</odoo>

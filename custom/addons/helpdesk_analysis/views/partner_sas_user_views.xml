@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        <!-- We inherit the base partner form to insert our button & fields -->
+        <record id="view_partner_form_sas_inherit" model="ir.ui.view">
+            <field name="name">res.partner.form.sas.inherit.sasuser</field>
+            <field name="model">res.partner</field>
+            <!-- For Odoo 17, check which view to inherit; 'base.view_partner_form' is often correct. -->
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+
+                <!-- Insert our button into the header. -->
+                <xpath expr="//header" position="inside">
+                    <button name="action_create_sas_user"
+                            type="object"
+                            string="Create SAS User"
+                            class="oe_highlight"/>
+                </xpath>
+
+                <!-- Show SAS fields in the form sheet (adapt the xpath to your layout). -->
+                <xpath expr="//sheet/notebook" position="inside">
+                    <group string="SAS Integration">
+                        <field name="sas_radius_id" readonly="1"/>
+                        <field name="is_sas_user" readonly="1"/>
+                    </group>
+                </xpath>
+
+            </field>
+        </record>
+
+    </data>
+</odoo>
