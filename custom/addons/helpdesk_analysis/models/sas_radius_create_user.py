@@ -42,17 +42,13 @@ class ResPartnerSAS(models.Model):
         Return the user ID or False if not found.
         """
 
-        # Suppose SAS has an endpoint: GET /admin/api/index.php/api/user?search=username
-        # Or you might need to do a POST with "search" param in JSON, etc.
-        # We'll do a hypothetical GET:
-
         endpoint = f"{base_url}/admin/api/index.php/api/index/user?page=1"
         headers = {
             'Content-Type': 'application/json',
             'Authorization': f'Bearer {token}'
         }
 
-        # Build a search payload. Possibly adapt to how your SAS endpoint works.
+        # Build a search payload
         search_payload = {
             "payload": AESController.encrypt(
                 json.dumps({
@@ -61,7 +57,7 @@ class ResPartnerSAS(models.Model):
                     "direction": "desc",
                     "parent_id": None,
                     "profile_id": None,
-                    "search": username,      # searching by username
+                    "search": username,
                     "columns": [
                         "id",
                         "username",
@@ -76,7 +72,6 @@ class ResPartnerSAS(models.Model):
             return False
 
         resp_json = resp.json()
-        # Typically, 'data' is a list of matched users
         users_list = resp_json.get('data', [])
         for user in users_list:
             if user.get('username') == username:
@@ -102,6 +97,11 @@ class ResPartnerSAS(models.Model):
         create_user_url = f"{company.url}/admin/api/index.php/api/user"
 
         for partner in self:
+            # ===== Update to handle old records gracefully =====
+            if not hasattr(partner, 'sas_radius_id'):
+                # Skip if the field does not exist for this partner
+                continue
+
             if partner.sas_radius_id:
                 # Already linked, skip
                 continue
@@ -127,7 +127,7 @@ class ResPartnerSAS(models.Model):
                 "address": partner.street2 or "",
                 "apartment": None,
                 "street": partner.street or "",
-                "contract_id": getattr(partner, 'sas_contract_id', None),
+                "contract_id": getattr(partner, 'sas_contract_id', None),  # Handle missing field
                 "national_id": None,
                 "notes": None,
                 "expiration": "2030-01-01 00:00:00",
