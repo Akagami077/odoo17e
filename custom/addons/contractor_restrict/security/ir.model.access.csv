@@ -5,6 +5,6 @@ access_helpdesk_tag_contractor,helpdesk.tag contractor access,helpdesk.model_hel
 access_mail_activity_contractor,mail.activity contractor access,mail.model_mail_activity,group_helpdesk_contractor,1,1,1,1
 access_mail_message_contractor,mail.message contractor access,mail.model_mail_message,group_helpdesk_contractor,1,1,1,0
 access_res_users_contractor,res.users contractor access,base.model_res_users,group_helpdesk_contractor,1,0,0,0
-access_res_users_helpdesk_manager,res.users helpdesk manager access,base.model_res_users,helpdesk.group_helpdesk_manager,1,0,0,0
+access_res_users_helpdesk_manager,res.users helpdesk manager access,base.model_res_users,helpdesk.group_helpdesk_manager,1,1,0,0
 access_helpdesk_ticket_type_contractor,helpdesk.ticket.type contractor access,helpdesk.model_helpdesk_ticket_type,group_helpdesk_contractor,1,1,1,1
 access_res_users_contractor_edit,res.users contractor edit access,base.model_res_users,group_helpdesk_contractor,1,1,0,0
