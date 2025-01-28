@@ -14,10 +14,10 @@
                 <field name="in_time"/>
                 <field name="out_time"/>
                 <field name="dur"/>
-                <!-- NEW SLA COMPARISON FIELDS -->
                 <field name="sla_status" decoration-success="sla_status == 'within'" decoration-danger="sla_status == 'above'"/>
                 <field name="time_above_sla" decoration-success="sla_status == 'within'" decoration-danger="sla_status == 'above'"/>
-                
+                <!-- New Field -->
+                <field name="signee_last_message"/>
             </tree>
         </field>
     </record>
@@ -40,10 +40,13 @@
                         <field name="in_time"/>
                         <field name="out_time"/>
                         <field name="dur"/>
-                        <!-- SLA COMPARISON FIELDS -->
                         <field name="sla_status"/>
                         <field name="time_above_sla"/>
                         <field name="user_id" string="Assigned User"/>
+                    </group>
+                    <group>
+                        <!-- New Field -->
+                        <field name="signee_last_message"/>
                     </group>
                 </sheet>
             </form>
@@ -64,31 +67,9 @@
                 <field name="dur"/>
                 <field name="sla_status"/>
                 <field name="time_above_sla"/>
+                <!-- New Field -->
+                <field name="signee_last_message"/>
             </search>
         </field>
     </record>
-
-    <!-- Action to open the model in Odoo -->
-    <record id="action_helpdesk_ticket_team_history" model="ir.actions.act_window">
-        <field name="name">Ticket Team History</field>
-        <field name="res_model">helpdesk.ticket.team.history</field>
-        <field name="view_mode">tree,form,search</field>
-        <field name="domain">[]</field>
-        <field name="context">{}</field>
-    </record>
-
-    <!-- Menu Items -->
-    <menuitem
-        id="menu_helpdesk_ticket_team_history_root"
-        name="Helpdesk History"
-        parent="helpdesk.menu_helpdesk_root"
-        sequence="200"
-    />
-    <menuitem
-        id="menu_helpdesk_ticket_team_history"
-        name="Team History"
-        parent="menu_helpdesk_ticket_team_history_root"
-        action="action_helpdesk_ticket_team_history"
-        sequence="10"
-    />
 </odoo>
