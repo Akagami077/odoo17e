@@ -11,14 +11,14 @@ class HelpdeskTicket(models.Model):
     @api.model_create_multi
     def create(self, vals_list):
         """
-        On ticket creation, if team_id is set, we create a history record.
-        We also find the SLA and copy its 'time' field to 'sla_time'.
+        عند إنشاء تذكرة جديدة، إذا كان `team_id` محددًا، نقوم بإنشاء سجل في الهيستوري.
+        أيضًا، نقوم بجلب `sla_time` من الـ SLA المرتبط.
         """
         tickets = super().create(vals_list)
         for ticket, vals in zip(tickets, vals_list):
             team_id = vals.get('team_id')
             if team_id:
-                # Find SLA
+                # البحث عن SLA المناسب
                 sla_record = ticket._find_sla(team_id, ticket.ticket_type_id.id)
                 sla_id = sla_record.id if sla_record else False
                 sla_time = sla_record.time if sla_record else 0.0
@@ -29,36 +29,40 @@ class HelpdeskTicket(models.Model):
                     'in_time': fields.Datetime.now(),
                     'ticket_type_id': ticket.ticket_type_id.id,
                     'sla_id': sla_id,
-                    'sla_time': sla_time,  # store the SLA time
+                    'sla_time': sla_time,  # تخزين قيمة SLA Time
                 })
         return tickets
 
     def write(self, vals):
         """
-        Overriding write to:
-         - Close out_time on old team, create new record if team changes.
-         - Copy SLA and SLA time to the new record.
-         - If ticket closes, out_time is set.
+        عند تحديث تذكرة:
+        - إذا تغير `team_id`، يتم إغلاق السجل السابق وإنشاء سجل جديد.
+        - إذا تغير `sla_time` أو `time`، يتم تحديثه فقط في آخر سجل في الهيستوري لنفس `ticket_id` و`team_id`.
+        - إذا تم إغلاق التذكرة، يتم تحديث `out_time`.
         """
         for ticket in self:
             old_team_id = ticket.team_id.id
 
-            # Find the last open line for the old team
             last_line = self.env['helpdesk.ticket.team.history'].search([
                 ('ticket_id', '=', ticket.id),
                 ('team_id', '=', old_team_id),
-                ('out_time', '=', False),
-            ], limit=1, order='in_time desc')
+            ], order='in_time desc', limit=1)
 
             result = super(HelpdeskTicket, ticket).write(vals)
 
-            # 1) If the team changed
+            if 'sla_time' in vals and last_line:
+                last_line.write({'sla_time': vals['sla_time']})
+
+            if 'time' in vals:
+                sla_record = ticket._find_sla(ticket.team_id.id, ticket.ticket_type_id.id)
+                if sla_record and last_line:
+                    last_line.write({'sla_time': sla_record.time})
+
             new_team_id = ticket.team_id.id
             if 'team_id' in vals and new_team_id != old_team_id:
                 if last_line:
                     last_line.out_time = fields.Datetime.now()
 
-                # Find SLA
                 sla_record = ticket._find_sla(new_team_id, ticket.ticket_type_id.id)
                 sla_id = sla_record.id if sla_record else False
                 sla_time = sla_record.time if sla_record else 0.0
@@ -69,10 +73,9 @@ class HelpdeskTicket(models.Model):
                     'in_time': fields.Datetime.now(),
                     'ticket_type_id': ticket.ticket_type_id.id,
                     'sla_id': sla_id,
-                    'sla_time': sla_time,  # store the SLA time
+                    'sla_time': sla_time,
                 })
 
-            # 2) If ticket is closed (stage folded or close_date), set out_time
             if 'stage_id' in vals and ticket.stage_id.fold:
                 if last_line and not last_line.out_time:
                     last_line.out_time = fields.Datetime.now()
@@ -81,12 +84,12 @@ class HelpdeskTicket(models.Model):
                 if last_line and not last_line.out_time:
                     last_line.out_time = fields.Datetime.now()
 
-        return True
+        return result
+
 
     def _find_sla(self, team_id, ticket_type_id):
         """
-        Example: Finds an SLA that matches (team + ticket_type).
-        'ticket_type_ids' is many2many, so we use 'in'.
+        البحث عن SLA المناسب بناءً على `team_id` و `ticket_type_id`.
         """
         domain = [('team_id', '=', team_id)]
         if ticket_type_id:
