@@ -1,8 +1,6 @@
+import logging
 from odoo import models, api, exceptions, _
 
-
-
-import logging
 _logger = logging.getLogger(__name__)
 
 class HelpdeskTicket(models.Model):
@@ -11,16 +9,24 @@ class HelpdeskTicket(models.Model):
     def write(self, vals):
         # Check if the user belongs to the contractor group
         if self.env.user.has_group('contractor_restrict.group_helpdesk_contractor'):
+            # Restrict editing the description field
+            if 'description' in vals:
+                raise exceptions.UserError(_("You are not allowed to edit the description of the ticket."))
+
+            # Restrict contractors to assign tickets only to 'Operations' team
             if 'team_id' in vals:
                 # Fetch the 'Operations' team dynamically
                 operations_team = self.env['helpdesk.team'].search([('name', '=', 'Operations')], limit=1)
 
+                # Extract the ID correctly
+                team_id = vals['team_id'][0] if isinstance(vals['team_id'], (tuple, list)) else vals['team_id']
+
                 # Debug logs
                 _logger.info(f"Operations Team ID: {operations_team.id if operations_team else 'Not Found'}")
-                _logger.info(f"User is trying to set team_id to: {vals['team_id']}")
+                _logger.info(f"User is trying to set team_id to: {team_id}")
 
                 # Check if the selected team is NOT 'Operations'
-                if not operations_team or vals['team_id'] != operations_team.id:
+                if not operations_team or team_id != operations_team.id:
                     raise exceptions.UserError(
                         _("You are only allowed to assign tickets to the 'Operations' team.")
                     )
