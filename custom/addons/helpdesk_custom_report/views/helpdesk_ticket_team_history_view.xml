@@ -54,6 +54,25 @@
     </record>
 
     <!-- Search View -->
+<!--    <record id="view_helpdesk_ticket_team_history_search" model="ir.ui.view">-->
+<!--        <field name="name">helpdesk.ticket.team.history.search</field>-->
+<!--        <field name="model">helpdesk.ticket.team.history</field>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <search string="Ticket Team History">-->
+<!--                <field name="ticket_id"/>-->
+<!--                <field name="team_id"/>-->
+<!--                <field name="ticket_type_id"/>-->
+<!--                <field name="sla_id"/>-->
+<!--                <field name="sla_time"/>-->
+<!--                <field name="dur"/>-->
+<!--                <field name="sla_status"/>-->
+<!--                <field name="time_above_sla"/>-->
+<!--                &lt;!&ndash; New Field &ndash;&gt;-->
+<!--                <field name="signee_last_message"/>-->
+<!--            </search>-->
+<!--        </field>-->
+<!--    </record>-->
+    <!-- Search View -->
     <record id="view_helpdesk_ticket_team_history_search" model="ir.ui.view">
         <field name="name">helpdesk.ticket.team.history.search</field>
         <field name="model">helpdesk.ticket.team.history</field>
@@ -67,8 +86,27 @@
                 <field name="dur"/>
                 <field name="sla_status"/>
                 <field name="time_above_sla"/>
-                <!-- New Field -->
                 <field name="signee_last_message"/>
+
+                <!-- Daily Filter -->
+                <filter string="Today" name="filter_today"
+                        domain="[('in_time', '>=', context_today())]"/>
+
+                <!-- Weekly Filter: Start of the current week (Monday) -->
+                <filter
+                        string="Last 7 Days"
+                        name="last_7_days"
+                        domain="[
+                            ('in_time','>=', (context_today() + relativedelta(days=-6)))
+                        ]"
+                />
+                <filter
+                        string="Last 30 Days"
+                        name="last_30_days"
+                        domain="[
+                            ('in_time','>=', (context_today() + relativedelta(days=-29)))
+                        ]"
+                 />
             </search>
         </field>
     </record>
