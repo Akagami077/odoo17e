@@ -33,3 +33,13 @@ class HelpdeskTicket(models.Model):
 
         # Allow other updates
         return super(HelpdeskTicket, self).write(vals)
+
+class MailMessage(models.Model):
+    _inherit = 'mail.message'
+
+    def write(self, vals):
+        # Restrict contractors from editing messages in the chatter
+        if self.env.user.has_group('contractor_restrict.group_helpdesk_contractor'):
+            raise exceptions.UserError(_("You are not allowed to edit messages on this ticket."))
+
+        return super(MailMessage, self).write(vals)
