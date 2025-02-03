@@ -1,3 +1,5 @@
+# helpdesk_ticket_team_history.py
+# ---------------------------------
 from odoo import api, fields, models, tools
 from datetime import datetime
 
@@ -24,6 +26,14 @@ class HelpdeskTicketTeamHistory(models.Model):
     )
     out_time = fields.Datetime(
         string='Out Time'
+    )
+
+    # Company reference
+    company_id = fields.Many2one(
+        'res.company',
+        string='Company',
+        default=lambda self: self.env.company,
+        index=True
     )
 
     # Computed field for duration
@@ -104,29 +114,38 @@ class HelpdeskTicketTeamHistory(models.Model):
     @api.model
     def create(self, vals):
         """
-        Override create method to set the `user_id` and initialize the signee's last message if provided.
+        Override create method to set:
+        - The `company_id` from the ticket’s company if not provided.
+        - The `user_id`,
+        - The signee's last message for the period.
         """
+        # Ensure company_id matches the ticket's company
+        if 'ticket_id' in vals and not vals.get('company_id'):
+            ticket = self.env['helpdesk.ticket'].browse(vals['ticket_id'])
+            vals['company_id'] = ticket.company_id.id
+
+        # Continue original logic
         if 'ticket_id' in vals:
             ticket = self.env['helpdesk.ticket'].browse(vals['ticket_id'])
             vals['user_id'] = ticket.user_id.id if ticket.user_id else None
 
             # Automatically fetch the signee's last message during this period
-            if 'in_time' in vals:
-                in_time = vals['in_time']
-                out_time = vals.get('out_time', fields.Datetime.now())
-                messages = self.env['mail.message'].search([
-                    ('res_id', '=', ticket.id),
-                    ('model', '=', 'helpdesk.ticket'),
-                    ('author_id', '=', ticket.user_id.partner_id.id),
-                    ('message_type', '=', 'comment'),  # فقط الرسائل المكتوبة
-                    ('date', '>=', in_time),
-                    ('date', '<=', out_time)
-                ], order='date desc', limit=1)
+            in_time = vals.get('in_time', fields.Datetime.now())
+            out_time = vals.get('out_time', fields.Datetime.now())
+            messages = self.env['mail.message'].search([
+                ('res_id', '=', ticket.id),
+                ('model', '=', 'helpdesk.ticket'),
+                ('author_id', '=', ticket.user_id.partner_id.id),
+                ('message_type', '=', 'comment'),  # فقط الرسائل المكتوبة
+                ('date', '>=', in_time),
+                ('date', '<=', out_time)
+            ], order='date desc', limit=1)
 
-                if messages:
-                    vals['signee_last_message'] = tools.html2plaintext(messages.body).strip()
+            if messages:
+                vals['signee_last_message'] = tools.html2plaintext(messages.body).strip()
 
         return super(HelpdeskTicketTeamHistory, self).create(vals)
+
 
 class HelpdeskTicket(models.Model):
     _inherit = 'helpdesk.ticket'
@@ -164,7 +183,6 @@ class HelpdeskTicket(models.Model):
                     ('date', '<=', out_time)
                 ], order='date desc', limit=1)
 
-
                 if messages:
                     history_vals['signee_last_message'] = tools.html2plaintext(messages.body).strip()
 
@@ -184,7 +202,8 @@ class HelpdeskTicket(models.Model):
                         'sla_time': sla_time,
                     })
 
-                last_history.write(history_vals)
+                if history_vals:
+                    last_history.write(history_vals)
 
         return super(HelpdeskTicket, self).write(vals)
 

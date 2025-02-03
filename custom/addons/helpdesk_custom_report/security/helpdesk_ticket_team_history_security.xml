@@ -1,0 +1,34 @@
+<!-- security/helpdesk_ticket_team_history_security.xml -->
+<odoo>
+    <!-- 1) A Record Rule Restricting Data by Company -->
+    <record id="helpdesk_ticket_team_history_rule" model="ir.rule">
+        <field name="name">Helpdesk Ticket Team History - Multi Company</field>
+        <!--
+            This "model_helpdesk_ticket_team_history" is the "external_id" of
+            your model. Make sure it matches exactly the XMLID for your model
+            in Odoo. If you used _name='helpdesk.ticket.team.history' and
+            haven't overridden the model ID, then "model_helpdesk_ticket_team_history"
+            is typically correct.
+        -->
+        <field name="model_id" ref="model_helpdesk_ticket_team_history"/>
+
+        <!--
+            domain_force can be one of the following:
+
+            1) [("company_id","in", user.company_ids.ids)]
+               The user sees records in ANY of their allowed companies
+               (i.e. multiple if the user has them checked in the top-right).
+
+            2) [("company_id","=", user.company_id.id)]
+               The user only sees records in their currently active company
+               (the single one they switched to at the top-right).
+        -->
+        <field name="domain_force">[('company_id', 'in', user.company_ids.ids)]</field>
+
+        <!-- 'global' means it applies to all groups. If you only want certain
+             groups to have this rule, you can set global=False and assign
+             groups with <field name="groups" eval="[(4, ref('some_group_xml_id'))]"/>.
+        -->
+        <field name="global" eval="True"/>
+    </record>
+</odoo>

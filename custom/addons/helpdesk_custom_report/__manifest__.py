@@ -12,8 +12,9 @@
     'data': [
         'security/ir.model.access.csv',
         'views/helpdesk_ticket_team_history_view.xml',
+        'security/helpdesk_ticket_team_history_security.xml',
         'views/menu.xml',
     ],
     'installable': True,
-    'application': True,  # اجعل هذا الحقل True لظهور التطبيق في قائمة التطبيقات
+    'application': False,  # اجعل هذا الحقل True لظهور التطبيق في قائمة التطبيقات
 }

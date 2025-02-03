@@ -1,3 +1,4 @@
+<!-- helpdesk_ticket_team_history_view.xml -->
 <odoo>
     <!-- Tree (List) View -->
     <record id="view_helpdesk_ticket_team_history_tree" model="ir.ui.view">
@@ -9,14 +10,18 @@
                 <field name="team_id"/>
                 <field name="ticket_type_id"/>
                 <field name="user_id" string="Assigned User"/>
+                <field name="company_id"/>
                 <field name="sla_id"/>
                 <field name="sla_time"/>
                 <field name="in_time"/>
                 <field name="out_time"/>
                 <field name="dur"/>
-                <field name="sla_status" decoration-success="sla_status == 'within'" decoration-danger="sla_status == 'above'"/>
-                <field name="time_above_sla" decoration-success="sla_status == 'within'" decoration-danger="sla_status == 'above'"/>
-                <!-- New Field -->
+                <field name="sla_status"
+                       decoration-success="sla_status == 'within'"
+                       decoration-danger="sla_status == 'above'"/>
+                <field name="time_above_sla"
+                       decoration-success="sla_status == 'within'"
+                       decoration-danger="sla_status == 'above'"/>
                 <field name="signee_last_message"/>
             </tree>
         </field>
@@ -45,7 +50,7 @@
                         <field name="user_id" string="Assigned User"/>
                     </group>
                     <group>
-                        <!-- New Field -->
+                        <field name="company_id"/>
                         <field name="signee_last_message"/>
                     </group>
                 </sheet>
@@ -53,25 +58,6 @@
         </field>
     </record>
 
-    <!-- Search View -->
-<!--    <record id="view_helpdesk_ticket_team_history_search" model="ir.ui.view">-->
-<!--        <field name="name">helpdesk.ticket.team.history.search</field>-->
-<!--        <field name="model">helpdesk.ticket.team.history</field>-->
-<!--        <field name="arch" type="xml">-->
-<!--            <search string="Ticket Team History">-->
-<!--                <field name="ticket_id"/>-->
-<!--                <field name="team_id"/>-->
-<!--                <field name="ticket_type_id"/>-->
-<!--                <field name="sla_id"/>-->
-<!--                <field name="sla_time"/>-->
-<!--                <field name="dur"/>-->
-<!--                <field name="sla_status"/>-->
-<!--                <field name="time_above_sla"/>-->
-<!--                &lt;!&ndash; New Field &ndash;&gt;-->
-<!--                <field name="signee_last_message"/>-->
-<!--            </search>-->
-<!--        </field>-->
-<!--    </record>-->
     <!-- Search View -->
     <record id="view_helpdesk_ticket_team_history_search" model="ir.ui.view">
         <field name="name">helpdesk.ticket.team.history.search</field>
@@ -87,12 +73,13 @@
                 <field name="sla_status"/>
                 <field name="time_above_sla"/>
                 <field name="signee_last_message"/>
+                <field name="company_id"/>
 
                 <!-- Daily Filter -->
                 <filter string="Today" name="filter_today"
                         domain="[('in_time', '>=', context_today())]"/>
 
-                <!-- Weekly Filter: Start of the current week (Monday) -->
+                <!-- Last 7 Days Filter -->
                 <filter
                         string="Last 7 Days"
                         name="last_7_days"
@@ -100,13 +87,15 @@
                             ('in_time','>=', (context_today() + relativedelta(days=-6)))
                         ]"
                 />
+
+                <!-- Last 30 Days Filter -->
                 <filter
                         string="Last 30 Days"
                         name="last_30_days"
                         domain="[
                             ('in_time','>=', (context_today() + relativedelta(days=-29)))
                         ]"
-                 />
+                />
             </search>
         </field>
     </record>
