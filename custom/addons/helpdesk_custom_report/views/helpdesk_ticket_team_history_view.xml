@@ -1,12 +1,13 @@
 <odoo>
-    <!-- Tree (List) View -->
     <record id="view_helpdesk_ticket_team_history_tree" model="ir.ui.view">
         <field name="name">helpdesk.ticket.team.history.tree</field>
         <field name="model">helpdesk.ticket.team.history</field>
         <field name="arch" type="xml">
-            <tree string="Ticket Team History" create="false">
+            <tree string="Team History" create="false">
+                <!-- Show the split ID and Title -->
                 <field name="ticket_id" string="Ticket ID"/>
-                <field name="ticket_name" string="Ticket Title"/>
+                <field name="ticket_name" string="Title"/>
+
                 <field name="team_id"/>
                 <field name="ticket_type_id"/>
                 <field name="user_id" string="Assigned User"/>
@@ -23,22 +24,29 @@
                        decoration-success="sla_status == 'within'"
                        decoration-danger="sla_status == 'above'"/>
                 <field name="signee_last_message"/>
+
+                <field name="partner_name" string="Customer"/>
+                <field name="partner_phone" string="Phone"/>
             </tree>
         </field>
     </record>
 
-    <!-- Form View -->
     <record id="view_helpdesk_ticket_team_history_form" model="ir.ui.view">
         <field name="name">helpdesk.ticket.team.history.form</field>
         <field name="model">helpdesk.ticket.team.history</field>
         <field name="arch" type="xml">
-            <form string="Ticket Team History">
+            <form string="Team History">
                 <sheet>
                     <group>
-                        <field name="ticket_id" string="Ticket ID"/>
-                        <field name="ticket_name" string="Ticket Title" readonly="1"/>
+                        <field name="ticket_id" readonly="1" />
+                        <field name="ticket_name" readonly="1" />
+                    </group>
+                    <group>
+                        <field name="ticket_id"/>
                         <field name="team_id"/>
                         <field name="ticket_type_id"/>
+                    </group>
+                    <group>
                         <field name="sla_id"/>
                         <field name="sla_time"/>
                     </group>
@@ -48,25 +56,34 @@
                         <field name="dur"/>
                         <field name="sla_status"/>
                         <field name="time_above_sla"/>
-                        <field name="user_id" string="Assigned User"/>
+                        <field name="user_id"/>
                     </group>
                     <group>
                         <field name="company_id"/>
                         <field name="signee_last_message"/>
                     </group>
+
+                    <group>
+                        <!-- New fields -->
+                        <field name="partner_name"/>
+                        <field name="partner_phone"/>
+                    </group>
+
                 </sheet>
             </form>
         </field>
     </record>
 
-    <!-- Search View -->
     <record id="view_helpdesk_ticket_team_history_search" model="ir.ui.view">
         <field name="name">helpdesk.ticket.team.history.search</field>
         <field name="model">helpdesk.ticket.team.history</field>
         <field name="arch" type="xml">
-            <search string="Ticket Team History">
+            <search string="Team History">
+                <!-- Permit searching by parsed ID/Title if needed -->
+                <field name="ticket_id" string="Ticket ID"/>
+                <field name="ticket_name" string="Title"/>
+
                 <field name="ticket_id"/>
-                <field name="ticket_name" string="Ticket Title"/>
                 <field name="team_id"/>
                 <field name="ticket_type_id"/>
                 <field name="sla_id"/>
@@ -77,27 +94,19 @@
                 <field name="signee_last_message"/>
                 <field name="company_id"/>
 
-                <!-- Daily Filter -->
-                <filter string="Today" name="filter_today"
+                <filter name="filter_today"
+                        string="Today"
                         domain="[('in_time', '>=', context_today())]"/>
-
-                <!-- Last 7 Days Filter -->
-                <filter
+                <filter name="last_7_days"
                         string="Last 7 Days"
-                        name="last_7_days"
                         domain="[
                             ('in_time','>=', (context_today() + relativedelta(days=-6)))
-                        ]"
-                />
-
-                <!-- Last 30 Days Filter -->
-                <filter
+                        ]"/>
+                <filter name="last_30_days"
                         string="Last 30 Days"
-                        name="last_30_days"
                         domain="[
                             ('in_time','>=', (context_today() + relativedelta(days=-29)))
-                        ]"
-                />
+                        ]"/>
             </search>
         </field>
     </record>

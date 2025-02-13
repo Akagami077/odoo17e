@@ -12,8 +12,8 @@ class HelpdeskTicket(models.Model):
     @api.model_create_multi
     def create(self, vals_list):
         """
-        عند إنشاء تذكرة جديدة، إذا كان `team_id` محددًا، نقوم بإنشاء سجل في الهيستوري.
-        أيضًا، نقوم بجلب `sla_time` من الـ SLA المرتبط.
+        عند إنشاء تذكرة جديدة، إذا كان team_id محددًا، نقوم بإنشاء سجل في الهيستوري.
+        أيضًا، نقوم بجلب sla_time من الـ SLA المرتبط.
         """
         tickets = super().create(vals_list)
         for ticket, vals in zip(tickets, vals_list):
@@ -38,9 +38,9 @@ class HelpdeskTicket(models.Model):
     def write(self, vals):
         """
         عند تحديث تذكرة:
-        - إذا تغير `team_id`، يتم إغلاق السجل السابق وإنشاء سجل جديد.
-        - إذا تغير `sla_time` أو `time`، يتم تحديثه فقط في آخر سجل في الهيستوري لنفس `ticket_id` و`team_id`.
-        - إذا تم إغلاق التذكرة، يتم تحديث `out_time`.
+        - إذا تغير team_id، يتم إغلاق السجل السابق وإنشاء سجل جديد.
+        - إذا تغير sla_time أو time، يتم تحديثه فقط في آخر سجل في الهيستوري لنفس ticket_id وteam_id.
+        - إذا تم إغلاق التذكرة، يتم تحديث out_time.
         """
         for ticket in self:
             old_team_id = ticket.team_id.id
@@ -95,7 +95,7 @@ class HelpdeskTicket(models.Model):
 
     def _find_sla(self, team_id, ticket_type_id):
         """
-        البحث عن SLA المناسب بناءً على `team_id` و `ticket_type_id`.
+        البحث عن SLA المناسب بناءً على team_id و ticket_type_id.
         """
         domain = [('team_id', '=', team_id)]
         if ticket_type_id:
@@ -110,8 +110,8 @@ class HelpdeskSLA(models.Model):
 
     def write(self, vals):
         """
-        Override write to update `sla_time` in `helpdesk.ticket.team.history`
-        when the SLA's `time` field is updated.
+        Override write to update sla_time in helpdesk.ticket.team.history
+        when the SLA's time field is updated.
         """
         result = super().write(vals)
 

@@ -21,7 +21,7 @@
                 <!-- Show SAS fields in the form sheet (adapt the xpath to your layout). -->
                 <xpath expr="//sheet/notebook" position="inside">
                     <group string="SAS Integration">
-                        <field name="sas_radius_id" readonly="1"/>
+<!--                        <field name="sas_radius_id" readonly="1"/>-->
                         <field name="is_sas_user" readonly="1"/>
                     </group>
                 </xpath>
