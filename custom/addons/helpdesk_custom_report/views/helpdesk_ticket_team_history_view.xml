@@ -42,7 +42,7 @@
                         <field name="ticket_name" readonly="1" />
                     </group>
                     <group>
-                        <field name="ticket_id"/>
+<!--                        <field name="ticket_id"/>-->
                         <field name="team_id"/>
                         <field name="ticket_type_id"/>
                     </group>
