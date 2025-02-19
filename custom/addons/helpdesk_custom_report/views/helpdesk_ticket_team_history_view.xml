@@ -5,9 +5,9 @@
         <field name="arch" type="xml">
             <tree string="Team History" create="false">
                 <!-- Show the split ID and Title -->
-                <field name="ticket_id" string="Ticket ID"/>
+                <field name="ticket_seq" string="Ticket REF"/>
                 <field name="ticket_name" string="Title"/>
-                <field name="ticket_seq" string="Seq"/>
+<!--                <field name="ticket_id" string="Ticket ID"/>-->
 
                 <field name="team_id"/>
                 <field name="ticket_type_id"/>
@@ -39,7 +39,7 @@
             <form string="Team History">
                 <sheet>
                     <group>
-                        <field name="ticket_id" readonly="1" />
+                        <field name="ticket_seq" readonly="1" />
                         <field name="ticket_name" readonly="1" />
                     </group>
                     <group>

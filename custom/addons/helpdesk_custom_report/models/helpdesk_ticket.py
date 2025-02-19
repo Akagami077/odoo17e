@@ -52,6 +52,13 @@ class HelpdeskTicket(models.Model):
 
             result = super(HelpdeskTicket, ticket).write(vals)
 
+            # Update ticket_seq if it changed
+            if 'ticket_seq' in vals:
+                ticket.ticket_seq = vals['ticket_seq']
+                # Optional: If you want to log this change in history, do it here:
+                if last_line:
+                    last_line.write({'ticket_seq': vals['ticket_seq']})
+
             # Update SLA time in the last history if sla_time changed
             if 'sla_time' in vals and last_line:
                 last_line.write({'sla_time': vals['sla_time']})
