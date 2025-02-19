@@ -154,7 +154,7 @@ class HelpdeskTicketTeamHistory(models.Model):
 
         if ticket_id:
             ticket = self.env['helpdesk.ticket'].browse(ticket_id)
-            vals['ticket_seq'] = str(ticket.id)
+            vals['ticket_seq'] = ticket.ticket_ref or ''
 
             vals['company_id'] = ticket.company_id.id if ticket.company_id else False
             vals['user_id'] = ticket.user_id.id if ticket.user_id else False
