@@ -1,4 +1,5 @@
 from odoo import api, fields, models, tools
+import re
 from datetime import datetime
 
 
@@ -11,6 +12,12 @@ class HelpdeskTicketTeamHistory(models.Model):
     ticket_id = fields.Integer(
         string='Ticket ID',
         required=True
+    )
+
+    # New field for the ID from the ticket name
+    ticket_seq = fields.Char(
+        string='Ticket Name ID',
+        help="ID extracted from the ticket name (e.g. 27 if the ticket name is '(#27)')."
     )
 
     # Ticket Title (Separated from ID)
@@ -147,8 +154,11 @@ class HelpdeskTicketTeamHistory(models.Model):
 
         if ticket_id:
             ticket = self.env['helpdesk.ticket'].browse(ticket_id)
+            vals['ticket_seq'] = str(ticket.id)
+
             vals['company_id'] = ticket.company_id.id if ticket.company_id else False
             vals['user_id'] = ticket.user_id.id if ticket.user_id else False
+
 
             in_time = vals.get('in_time', fields.Datetime.now())
             out_time = vals.get('out_time', fields.Datetime.now())
@@ -166,6 +176,7 @@ class HelpdeskTicketTeamHistory(models.Model):
                 vals['signee_last_message'] = tools.html2plaintext(messages.body).strip()
 
         return super(HelpdeskTicketTeamHistory, self).create(vals)
+
 
 
 class HelpdeskTicket(models.Model):
