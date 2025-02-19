@@ -84,7 +84,7 @@
                 <field name="ticket_id" string="Ticket ID"/>
                 <field name="ticket_name" string="Title"/>
 
-                <field name="ticket_id"/>
+                <field name="ticket_seq" string="Ticket REF"/>
                 <field name="team_id"/>
                 <field name="ticket_type_id"/>
                 <field name="sla_id"/>
