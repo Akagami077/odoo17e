@@ -12,7 +12,7 @@ class HelpdeskTicket(models.Model):
         if self.env.user.has_group('contractor_restrict.group_helpdesk_contractor'):
             # Fetch the 'Operations' and 'Contractors' teams dynamically
             allowed_teams = self.env['helpdesk.team'].search([
-                ('name', 'in', ['Operations', 'Contractors'])
+                ('name', 'in', ['Contractors'])
             ])
             allowed_team_ids = allowed_teams.mapped('id')
 
