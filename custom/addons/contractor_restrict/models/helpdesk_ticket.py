@@ -38,6 +38,10 @@ class HelpdeskTicket(models.Model):
     def write(self, vals):
         """ Restrict contractors from changing the team if the current team is NOT 'Contractors' """
         if self.env.user.has_group('contractor_restrict.group_helpdesk_contractor'):
+
+            if 'description' in vals:
+                raise exceptions.UserError(_("You are not allowed to edit the description of the ticket."))
+
             if 'team_id' in vals:
                 # Get the allowed teams dynamically
                 operations_team = self.env['helpdesk.team'].search([('name', '=', 'Operations')], limit=1)
@@ -63,3 +67,17 @@ class HelpdeskTicket(models.Model):
                         )
 
         return super(HelpdeskTicket, self).write(vals)
+
+class MailMessage(models.Model):
+    _inherit = 'mail.message'
+
+    def write(self, vals):
+        """
+        Restrict contractors from updating existing messages,
+        but allow them to send new messages.
+        """
+        if self.env.user.has_group('contractor_restrict.group_helpdesk_contractor'):
+            if 'body' in vals:
+                raise exceptions.UserError(_("You are not allowed to edit messages on this ticket."))
+
+        return super(MailMessage, self).write(vals)
