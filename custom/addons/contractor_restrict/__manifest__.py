@@ -8,6 +8,7 @@
     'author': 'Your Name',
     'depends': ['helpdesk'],
     'data': [
+        'views/helpdesk_search_views.xml',
         'security/helpdesk_security.xml',
         'security/ir.model.access.csv',
         'views/helpdesk_menu.xml',

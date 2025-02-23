@@ -11,6 +11,7 @@
             <field name="name">My Helpdesk Tickets</field>
             <field name="res_model">helpdesk.ticket</field>
             <field name="view_mode">kanban,tree,form</field>
+            <field name="search_view_id" ref="contractor_restrict.view_helpdesk_ticket_search_contractor" />
             <field name="domain">['|', ('user_id', '=', uid), ('create_uid', '=', uid)]</field>
             <field name="context">{'default_user_id': uid}</field>
         </record>
