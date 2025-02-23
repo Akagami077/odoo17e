@@ -16,7 +16,7 @@ class HelpdeskTicketTeamHistory(models.Model):
 
     # New field for the ID from the ticket name
     ticket_seq = fields.Char(
-        string='Ticket Name ID',
+        string='Ticket REF',
         help="ID extracted from the ticket name (e.g. 27 if the ticket name is '(#27)')."
     )
 
